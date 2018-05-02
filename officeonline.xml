@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <name>Office Online</name>
+   <key>officeonline</key>
+   <state>stable</state>
+    <logo>https://raw.githubusercontent.com/tomolimo/officeonline/master/officeonline.png</logo>
+   <description>
+      <short>
+		   <fr>Ce plugin fournit la possibilité d'utiliser un server Office Online avec les documents de GLPI.</fr>
+         <en>This plugin provides possibility to use an Office Online server with GLPI documents.</en>
+      </short>
+      <long>
+		   <fr>Ce plugin implémente un hôte WOPI permettant l'intégration d'un serveur Office Online. Cela permet de visionner les documents GLPI dans le navigateur, au lieu de les télécharger, et de les éditer en ligne (dans le navigateur). Si le format du document n'est pas supporté par le server Office Online, alors le plugin retourne au comportement GLPI standard (c'est à dire : téléchargement du document). Ce plugin permet aussi de faire de la co-édition d'un document (édition simultanée d'un document par plusieurs utilisateurs).</fr>
+         <en>This plugin implements a WOPI host which permits integration of an Office Online server. This enables GLPI document viewing in the browser, instead of downloading them, and it enables online editing in the browser. If doucment format is not supported by the Office Online server, then plugin falls-back on the GLPI standard behavior (.i.e: document download). this plugin allows the document co-authoring (simultaneous editing of a document by several users).</en>
+      </long>
+   </description>
+   <homepage>https://github.com/tomolimo/officeonline</homepage>
+   <download>https://github.com/tomolimo/officeonline/releases</download>
+   <issues>https://github.com/tomolimo/officeonline/issues</issues>
+   <readme>https://github.com/tomolimo/officeonline/wiki</readme>
+   <authors>
+      <author>Olivier Moron</author>
+   </authors>
+   <versions>
+      <version>
+         <num>1.0.0</num>
+         <compatibility>9.2</compatibility>
+      </version>
+      <version>
+          <num>1.0.0</num>
+          <compatibility>9.1</compatibility>
+      </version>
+   </versions>
+   <langs>
+      <lang>en_gb</lang>
+      <lang>fr_fr</lang>
+   </langs>
+   <license>GPL v2+</license>
+   <tags>
+         <fr>
+            <tag>Document</tag>
+            <tag>Edition</tag>
+			   <tag>En ligne</tag>
+            <tag>Visualisation</tag>
+            <tag>Office</tag>
+         </fr>
+         <en>
+            <tag>Document</tag>
+            <tag>Edition</tag>
+			   <tag>Online</tag>
+			   <tag>Viewing</tag>
+            <tag>Office</tag>
+         </en>
+   </tags>
+</root>
