@@ -92,7 +92,7 @@ function plugin_officeonline_install() {
                     ;
 			";
 
-      $DB->query($query) or die("error creating glpi_plugin_officeonline_configs" . $DB->error());
+      $DB->query($query) or die("error creating glpi_plugin_officeonline_discoveries" . $DB->error());
    }
 
 

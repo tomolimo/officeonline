@@ -61,7 +61,7 @@ function plugin_init_officeonline() {
 function plugin_version_officeonline() {
 
    return array('name'           => 'Office Online',
-                'version'        => '1.0.0',
+                'version'        => '1.0.1',
                 'author'         => 'Olivier Moron',
                 'license'        => 'GPLv2+',
                 'homepage'       => 'https://github.com/tomolimo/officeonline',
