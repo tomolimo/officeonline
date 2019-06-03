@@ -30,7 +30,7 @@ along with GLPI. If not, see <http://www.gnu.org/licenses/>.
 // Original Author of file: Olivier Moron
 // Purpose of file: to setup office online plugin to GLPI
 // ----------------------------------------------------------------------
-
+define ("PLUGIN_OFFICEONLINE_VERSION", "1.1.5");
 /**
  * Summary of plugin_init_officeonline
  */
@@ -43,7 +43,7 @@ function plugin_init_officeonline() {
         && Session::getLoginUserID()) {
 
       if (Session::haveRightsOr("config", [READ, UPDATE])) {
-         Plugin::registerClass('PluginOfficeonlineConfig', array('addtabon' => 'Config'));
+         Plugin::registerClass('PluginOfficeonlineConfig', ['addtabon' => 'Config']);
          $PLUGIN_HOOKS['config_page']['officeonline'] = 'front/config.form.php';
       }
 
@@ -60,12 +60,12 @@ function plugin_init_officeonline() {
  */
 function plugin_version_officeonline() {
 
-   return array('name'           => 'Office Online',
-                'version'        => '1.0.1',
-                'author'         => 'Olivier Moron',
-                'license'        => 'GPLv2+',
-                'homepage'       => 'https://github.com/tomolimo/officeonline',
-                'minGlpiVersion' => '9.1');
+   return ['name'           => 'Office Online',
+           'version'        => PLUGIN_OFFICEONLINE_VERSION,
+           'author'         => 'Olivier Moron',
+           'license'        => 'GPLv2+',
+           'homepage'       => 'https://github.com/tomolimo/officeonline',
+           'minGlpiVersion' => '9.2'];
 }
 
 
@@ -74,12 +74,12 @@ function plugin_version_officeonline() {
  * @return bool
  */
 function plugin_officeonline_check_prerequisites() {
-    global $DB, $LANG;
+   global $DB, $LANG;
 
     // Strict version check (could be less strict, or could allow various version)
-   if (version_compare(GLPI_VERSION, '9.1', 'lt')) {
-        echo $LANG['officeonline']['glpiversion'];
-        return false;
+   if (version_compare(GLPI_VERSION, '9.2', 'lt') || version_compare(GLPI_VERSION, '9.3', 'ge')) {
+      echo "This plugin requires GLPI >= 9.2 and < 9.3";
+      return false;
    }
 
    return true;
@@ -91,7 +91,7 @@ function plugin_officeonline_check_prerequisites() {
  * @param mixed $verbose
  * @return bool
  */
-function plugin_officeonline_check_config($verbose=false) {
+function plugin_officeonline_check_config($verbose = false) {
 
    return true;
 }

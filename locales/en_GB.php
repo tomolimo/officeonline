@@ -30,3 +30,7 @@ $LANG['officeonline']['title'][1]="Office Online";
 $LANG['officeonline']['config']['setup']="Office Online setup";
 $LANG['officeonline']['config']['discovery_url']="Office Web App (OWA) server URL";
 $LANG['officeonline']['config']['net_zone']="Net zone";
+$LANG['officeonline']['doctype']['setup']="Enabled document types";
+$LANG['officeonline']['doctype']['doctype']="Document type";
+$LANG['officeonline']['doctype']['app_name']="Application";
+$LANG['officeonline']['document']['title']="View and edit in your browser";

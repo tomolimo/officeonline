@@ -35,8 +35,8 @@ class PluginOfficeonlineWopi {
    /**
     * Summary of call
     */
-   public function call(){
-      header("Access-Control-Allow-Origin: *") ;
+   public function call() {
+      header("Access-Control-Allow-Origin: *");
 
       if (isset($_SERVER['REQUEST_METHOD'])) {
 
@@ -52,7 +52,7 @@ class PluginOfficeonlineWopi {
          //
          // Files endpoint
          //
-         $regexp = "@/wopi\\.front\\.php?/files/(?'docid'[^/?]+)\\?@i" ;
+         $regexp = "@/wopi\\.front\\.php?/files/(?'docid'[^/?]+)\\?@i";
          if (preg_match($regexp, $request_uri, $matches) && isset($_REQUEST['access_token'])) {
             switch ($verb) {
                case 'GET':
@@ -98,7 +98,7 @@ class PluginOfficeonlineWopi {
             //
             // File Contents endpoint
             //
-            $regexp = "@/wopi\\.front\\.php/files/(?'docid'[^/?]+)/contents\\?@i" ;
+            $regexp = "@/wopi\\.front\\.php/files/(?'docid'[^/?]+)/contents\\?@i";
             if (preg_match($regexp, $request_uri, $matches) && isset($_REQUEST['access_token'])) {
                // GetFile and PutFile operations
                switch ($verb) {

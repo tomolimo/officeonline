@@ -32,7 +32,7 @@ if (!defined('GLPI_ROOT')) {
 
 class PluginOfficeonlineConfig extends CommonDBTM {
 
-   static private $_instance = NULL;
+   static private $_instance = null;
 
    /**
     * Summary of canCreate
@@ -63,7 +63,7 @@ class PluginOfficeonlineConfig extends CommonDBTM {
     * @param mixed $nb plural
     * @return mixed
     */
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       global $LANG;
 
       return $LANG['officeonline']['config']['setup'];
@@ -74,7 +74,7 @@ class PluginOfficeonlineConfig extends CommonDBTM {
     * @param mixed $with_comment with comment
     * @return mixed
     */
-   function getName($with_comment=0) {
+   function getName($with_comment = 0) {
       global $LANG;
 
       return $LANG['officeonline']['title'][1];
@@ -186,7 +186,7 @@ class PluginOfficeonlineConfig extends CommonDBTM {
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td >".$LANG['officeonline']['config']['connectionstatus']."</td><td >";
+      echo "<td >".__('Connection status')."</td><td >";
 
       if ($config->fields['discovery_url'] != ''
          && $config->fields['net_zone'] != ''
@@ -197,13 +197,12 @@ class PluginOfficeonlineConfig extends CommonDBTM {
       }
       echo "</font></span></td></tr>\n";
 
-      $config->showFormButtons(array('candel'=>false));
+      $config->showFormButtons(['candel'=>false]);
 
       return false;
    }
 
-
-   function getTabNameForItem(CommonGLPI $item, $withtemplate=0) {
+   function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
       global $LANG;
 
       if ($item->getType()=='Config') {
@@ -213,12 +212,50 @@ class PluginOfficeonlineConfig extends CommonDBTM {
    }
 
 
-   static function displayTabContentForItem(CommonGLPI $item, $tabnum=1, $withtemplate=0) {
+   static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
 
       if ($item->getType()=='Config') {
          self::showConfigForm($item);
+         self::showExtensionForm();
       }
       return true;
    }
 
+   /*
+    * Form to activate/deactivate doctype
+    */
+   function showExtensionForm() {
+      global $DB, $LANG, $CFG_GLPI;
+
+      $extension = self::getInstance();
+      $datas = PluginOfficeonlineDiscovery::getDiscoveryList('view');
+
+      $extension->showFormHeader(['formtitle'=>$LANG['officeonline']['doctype']['setup'],'colspan' => 4]);
+      //echo "<tr><td>Extension</td><td>Application name</td><td><input type='checkbox' id=checkAll name='checkAll' /></td>";
+      echo "<tr><td><b>".$LANG['officeonline']['doctype']['doctype']."</b></td><td><b>".$LANG['officeonline']['doctype']['app_name']."</b></td><td><input type='checkbox' id='checkAll' name='checkAll' /></td>";
+      $i=0;
+      foreach ($datas as $data) {
+         $color = ($i%2 == 0) ? 'rgb(247, 247, 247)' : '#FFFFFF';
+         echo "<tr class='tab_bg_2' style='background-color:$color'>";
+         echo "<td>".$data['action_ext']."</td>";
+         echo "<td>".$data['app_name']."</td>";
+         if ($data['is_active']) {
+            echo "<td>
+               <input type='checkbox' id=".$data['action_ext']." name='ext[".$data['action_ext']."]' value = 1 checked ' />
+               <input type='hidden' class='active'  name='ext[".$data['action_ext']."][active]' value=1 />
+               <input type='hidden' id='id' name='ext[".$data['action_ext']."][id]' value=".$data['id']." />
+               </td>";
+         } else {
+            echo "<td>
+               <input type='checkbox' name='ext[".$data['action_ext']."]' value = 0 '/>
+               <input type='hidden' class='active' name='ext[".$data['action_ext']."][active]' value=0 />
+               <input type='hidden' id='id' name='ext[".$data['action_ext']."][id]' value=".$data['id']." />
+               </td>";
+         }
+         echo "</tr'>";
+         $i++;
+      }
+      $extension->showFormButtons(['candel'=>false]);
+      return false;
+   }
 }

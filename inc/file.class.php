@@ -37,7 +37,7 @@ class PluginOfficeonlineFile {
     * @param mixed $users_id
     * @return string
     */
-   static private function getUserName($users_id){
+   static private function getUserName($users_id) {
       if ($users_id == -1) {
          $name = 'Anonymous';
       } else {
@@ -77,7 +77,7 @@ class PluginOfficeonlineFile {
     * @param mixed $docid
     * @return string
     */
-   static private function getFileLockPath($docid){
+   static private function getFileLockPath($docid) {
       return GLPI_DOC_DIR."/_lock/~officeonline_$docid.lck";
    }
 
@@ -93,21 +93,21 @@ class PluginOfficeonlineFile {
    }
 
 
-	/**
-	 * Summary of checkFileInfo
-	 * @param mixed $docid
-	 * @param mixed $access_token
-	 * @param mixed $sc
-	 * @return string
-	 */
-	static function checkFileInfo($docid, $access_token, $sc='') {
+    /**
+     * Summary of checkFileInfo
+     * @param mixed $docid
+     * @param mixed $access_token
+     * @param mixed $sc
+     * @return string
+     */
+   static function checkFileInfo($docid, $access_token, $sc = '') {
       global $CFG_GLPI;
       $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? "https://" : "http://";
 
       $doc = new Document;
       $doc->getFromDB($docid);
 
-		header("Content-Type: application/json; charset=UTF-8");
+      header("Content-Type: application/json; charset=UTF-8");
 
       $completefilepath = GLPI_DOC_DIR."/".$doc->fields['filepath'];
       if (!file_exists($completefilepath)) {
@@ -115,68 +115,69 @@ class PluginOfficeonlineFile {
          return json_encode([]);
       }
 
-		$size = filesize($completefilepath);
-		$hash = base64_encode(hash_file('sha256', $completefilepath, true));
-		$modif = filemtime($completefilepath); //date('Y-m-d H:i:s', filemtime(self::getFilePath($docid)));
-		$users_id = self::getUserId($access_token);
+      $size = filesize($completefilepath);
+      $hash = base64_encode(hash_file('sha256', $completefilepath, true));
+      $modif = filemtime($completefilepath); //date('Y-m-d H:i:s', filemtime(self::getFilePath($docid)));
+      $users_id = self::getUserId($access_token);
       $canUpdate = self::canUpdate($access_token);
 
       $closeUrl = $protocol.$_SERVER['SERVER_NAME' ].$CFG_GLPI["root_doc"]."/front/document.form.php?id=$docid";
       if ($sc != '') {
          $closeUrl = $sc;
       }
-		return json_encode(["BaseFileName" => $doc->fields['filename'],
-							"OwnerId" => "$users_id",
-							"UserId" => "$users_id",
-							"UserFriendlyName" => self::getUserName($users_id),
-							"Size" => $size,
-							"SHA256" => $hash,
-							"Version" => "$modif",
-							"SupportsGetLock" => true,
-							"SupportsLocks" => true,
-							"SupportsUpdate" => true,
-                     "UserCanNotWriteRelative" => true,
-                     "SupportsExtendedLockLength" => true,
-							"UserCanWrite" => $canUpdate,
-                     "BreadcrumbBrandName" => "GLPI",
-                     "BreadcrumbBrandUrl" => $protocol.$_SERVER['SERVER_NAME' ].$CFG_GLPI["root_doc"],
-                     "BreadcrumbFolderName" => $doc->getTypeName(),
-                     "BreadcrumbFolderUrl" => $protocol.$_SERVER['SERVER_NAME' ].$CFG_GLPI["root_doc"]."/front/document.form.php?id=$docid",
-                     "CloseUrl" => $closeUrl,
-							"DownloadUrl" => $protocol.$_SERVER['SERVER_NAME' ].$CFG_GLPI["root_doc"]."/front/document.send.php?docid=$docid"
-							 ]) ;
-	}
+      return json_encode(["BaseFileName" => $doc->fields['filename'],
+                           "OwnerId" => "$users_id",
+                           "UserId" => "$users_id",
+                           "UserFriendlyName" => self::getUserName($users_id),
+                           "Size" => $size,
+                           "SHA256" => $hash,
+                           "Version" => "$modif",
+                           "SupportsGetLock" => true,
+                           "SupportsLocks" => true,
+                           "SupportsUpdate" => true,
+                           "UserCanNotWriteRelative" => true,
+                           "SupportsExtendedLockLength" => true,
+                           "UserCanWrite" => $canUpdate,
+                           "BreadcrumbBrandName" => "GLPI",
+                           "BreadcrumbBrandUrl" => $protocol.$_SERVER['SERVER_NAME' ].$CFG_GLPI["root_doc"],
+                           "BreadcrumbFolderName" => $doc->getTypeName(),
+                           "BreadcrumbFolderUrl" => $protocol.$_SERVER['SERVER_NAME' ].$CFG_GLPI["root_doc"]."/front/document.form.php?id=$docid",
+                           "CloseUrl" => $closeUrl,
+                           "DownloadUrl" => $protocol.$_SERVER['SERVER_NAME' ].$CFG_GLPI["root_doc"]."/front/document.send.php?docid=$docid" //,
+                           //"ClientUrl" => 'ms-word:ofv|u|http://localhost/c:/inetpub/wwwroot/glpi091/files/DOCX/b2/87694daaecb0c36a391378b5812c1050d1e34c.DOCX'
+                            ]);
+   }
 
 
-	/**
-	 * Summary of getFile
-	 * @param mixed $docid
-	 * @param mixed $access_token
-	 * @return string
-	 */
-	static function getFile($docid, $access_token) {
-		header("Content-Type: application/octet-stream");
+    /**
+     * Summary of getFile
+     * @param mixed $docid
+     * @param mixed $access_token
+     * @return string
+     */
+   static function getFile($docid, $access_token) {
+       header("Content-Type: application/octet-stream");
 
       $doc = new Document;
       $doc->getFromDB($docid);
 
-		//header("Content-Disposition: inline; filename=\"".$doc->fields['filename']."\"");
-		$file_content = file_get_contents( GLPI_DOC_DIR."/".$doc->fields['filepath']);
+       //header("Content-Disposition: inline; filename=\"".$doc->fields['filename']."\"");
+       $file_content = file_get_contents( GLPI_DOC_DIR."/".$doc->fields['filepath']);
 
-		return $file_content;
-	}
+       return $file_content;
+   }
 
 
-	/**
-	 * Summary of putFile
-	 * @param mixed $docid
-	 * @param mixed $data
-	 * @param mixed $access_token
-	 * @param mixed $request_headers
-	 * @return void
-	 */
-	static function putFile($docid, $data, $access_token, $request_headers) {
-		header("Content-Type: text/html; charset=UTF-8");
+    /**
+     * Summary of putFile
+     * @param mixed $docid
+     * @param mixed $data
+     * @param mixed $access_token
+     * @param mixed $request_headers
+     * @return void
+     */
+   static function putFile($docid, $data, $access_token, $request_headers) {
+       header("Content-Type: text/html; charset=UTF-8");
 
       $doc = new Document;
       $doc->getFromDB($docid);
@@ -187,14 +188,14 @@ class PluginOfficeonlineFile {
 
       $current_lock = self::getFileLockContent($docid);
 
-		$size = filesize(GLPI_DOC_DIR."/".$former_filepath);
+       $size = filesize(GLPI_DOC_DIR."/".$former_filepath);
 
       if (($current_lock == '' && $size > 0 )
-         || ($current_lock != '' && $current_lock != $request_headers['X-Wopi-Lock'])) {
+        || ($current_lock != '' && $current_lock != $request_headers['X-Wopi-Lock'])) {
          //409
          header('X-Wopi-Lock: '.$current_lock);
          http_response_code(409);
-         return ;
+         return;
       }
       // editnew action is currrently not supported
       //elseif ($current_lock == '') {
@@ -204,17 +205,20 @@ class PluginOfficeonlineFile {
 
       $new_filepath = Document::getUploadFileValidLocationName(explode('/', $former_filepath)[0], $sha1sum);
 
-		if (file_put_contents(GLPI_DOC_DIR."/".$new_filepath, $data) !== false) {
+      if (file_put_contents(GLPI_DOC_DIR."/".$new_filepath, $data) !== false) {
          // then update the sha1sum, users_id and filepath
          $users_id = self::getUserId($access_token);
-         $doc->update(['id' => $docid, 'sha1sum' => $sha1sum, 'filepath' => $new_filepath, 'users_id' => $users_id ]);
+         $_SESSION["glpiID"] = $users_id; // needs this to be able to log history for document
+         $doc->update(['id' => $docid, 'sha1sum' => $sha1sum, 'filepath' => $new_filepath]); //, 'users_id' => $users_id ]); // users_id is only used by Document class for creators, and not for modifiers
+         unset($_SESSION["glpiID"]);
          // and delete previous file
+         // not sure it is neccessary
          @unlink(GLPI_DOC_DIR."/".$former_filepath);
       }
-	}
+   }
 
-	static function lock($docid, $access_token, $request_headers) {
-		header("Content-Type: text/html; charset=UTF-8");
+   static function lock($docid, $access_token, $request_headers) {
+       header("Content-Type: text/html; charset=UTF-8");
 
       $current_lock = self::getFileLockContent($docid);
       if ($current_lock != '' && $current_lock != $request_headers['X-Wopi-Lock']) {
@@ -223,10 +227,10 @@ class PluginOfficeonlineFile {
       } else {
          file_put_contents(self::getFileLockPath($docid), $request_headers['X-Wopi-Lock']);
       }
-	}
+   }
 
    static function unlockAndRelock($docid, $access_token, $request_headers) {
-		header("Content-Type: text/html; charset=UTF-8");
+        header("Content-Type: text/html; charset=UTF-8");
 
       $current_lock = self::getFileLockContent($docid);
       if ($current_lock != '' && $current_lock != $request_headers['X-Wopi-Oldlock']) {
@@ -235,10 +239,10 @@ class PluginOfficeonlineFile {
       } else {
          file_put_contents(self::getFileLockPath($docid), $request_headers['X-Wopi-Lock']);
       }
-	}
+   }
 
    static function refreshLock($docid, $access_token, $request_headers) {
-		header("Content-Type: text/html; charset=UTF-8");
+        header("Content-Type: text/html; charset=UTF-8");
 
       $current_lock = self::getFileLockContent($docid);
       if ($current_lock == '' || $current_lock != $request_headers['X-Wopi-Lock']) {
@@ -247,11 +251,11 @@ class PluginOfficeonlineFile {
       } else {
          file_put_contents(self::getFileLockPath($docid), $request_headers['X-Wopi-Lock']);
       }
-	}
+   }
 
 
    static function unlock($docid, $access_token, $request_headers) {
-		header("Content-Type: text/html; charset=UTF-8");
+        header("Content-Type: text/html; charset=UTF-8");
 
       $current_lock = self::getFileLockContent($docid);
       if ($current_lock == '' || $current_lock != $request_headers['X-Wopi-Lock']) {
@@ -260,15 +264,15 @@ class PluginOfficeonlineFile {
       } else {
          unlink(self::getFileLockPath($docid));
       }
-	}
+   }
 
 
    static function getLock($docid) {
-		header("Content-Type: text/html; charset=UTF-8");
+        header("Content-Type: text/html; charset=UTF-8");
 
       $current_lock = self::getFileLockContent($docid);
       header('X-Wopi-Lock: '.$current_lock);
-	}
+   }
 
 
    /**
@@ -280,7 +284,7 @@ class PluginOfficeonlineFile {
     * @param mixed $request_headers
     */
    static function putRelativeFile($docid, $data, $access_token, $request_headers) {
-		header("Content-Type: application/octet-stream");
+        header("Content-Type: application/octet-stream");
       http_response_code(501);
 
       // X-WOPI-RelativeTarget
