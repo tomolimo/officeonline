@@ -35,7 +35,6 @@ if (!$CFG_GLPI["use_public_faq"]) {
 
 if (isset($_REQUEST['docid'])) {
 
-
    $doc = new Document;
 
    if (!$doc->getFromDB($_REQUEST['docid'])) {
@@ -51,7 +50,7 @@ if (isset($_REQUEST['docid'])) {
 
          Html::displayErrorAndDie(__('File is altered (bad checksum)'), true); // Doc alterated
       } else {
-         viewInBrowwser($doc);
+         viewInBrowser($doc);
       }
    } else {
       Html::displayErrorAndDie(__('Unauthorized access to this file'), true); // No right
@@ -59,7 +58,7 @@ if (isset($_REQUEST['docid'])) {
 
 }
 
-function viewInBrowwser($doc) {
+function viewInBrowser($doc) {
    global $CFG_GLPI;
 
    $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? "https://" : "http://";
@@ -68,7 +67,7 @@ function viewInBrowwser($doc) {
    $users_id = Session::getLoginUserID(true);
    $canUpdate = 0;
    if ($users_id != -1) { // not anonymous, check user's rights
-      $canUpdate = (Document::canUpdate() && $doc->canUpdateItem() ? 1 : 0) ;
+      $canUpdate = (Document::canUpdate() && $doc->canUpdateItem() ? 1 : 0);
    }
 
    //-1 for anonymous
@@ -84,7 +83,7 @@ function viewInBrowwser($doc) {
 
    $disco_list = PluginOfficeonlineDiscovery::getDiscoveryList('view');
 
-   if (isset($disco_list[$fileext])) {
+   if (isset($disco_list[$fileext]) && get_headers($disco_list[$fileext]['action_urlsrc']) !== false) {
       $file_content = file_get_contents('document.view.tpl');
 
       $file_content = str_replace( [
@@ -101,7 +100,8 @@ function viewInBrowwser($doc) {
 
       echo $file_content;
    } else {
-      header("Location: ".$protocol.$_SERVER['SERVER_NAME' ].$CFG_GLPI["root_doc"].'/front/document.send.php?docid='.$doc->fields['id']);
+      $port = empty($_SERVER['SERVER_PORT'])?'':':'.$_SERVER['SERVER_PORT'];
+      header("Location: ".$protocol.$_SERVER['SERVER_NAME' ].$port.$CFG_GLPI["root_doc"].'/front/document.send.php?docid='.$doc->fields['id']);
    }
 
 }

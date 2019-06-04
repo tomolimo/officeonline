@@ -30,3 +30,7 @@ $LANG['officeonline']['title'][1]="Office Online";
 $LANG['officeonline']['config']['setup']="Nastavení pro Office Online";
 $LANG['officeonline']['config']['discovery_url']="URL adresa serveru s Office Web App (OWA)";
 $LANG['officeonline']['config']['net_zone']="Síťová zóna";
+$LANG['officeonline']['doctype']['setup']="Enabled document types";
+$LANG['officeonline']['doctype']['doctype']="Document type";
+$LANG['officeonline']['doctype']['app_name']="Application";
+$LANG['officeonline']['document']['title']="View and edit in your browser";

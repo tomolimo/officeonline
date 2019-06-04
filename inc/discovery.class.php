@@ -30,6 +30,7 @@ if (!defined('GLPI_ROOT')) {
    die("Sorry. You can't access this file directly");
 }
 
+
 /**
  * discovery short summary.
  *
@@ -40,17 +41,21 @@ if (!defined('GLPI_ROOT')) {
  */
 class PluginOfficeonlineDiscovery extends CommonDBTM {
 
-   static function getTypeName($nb=0) {
+   static function getTypeName($nb = 0) {
       return _n('OWA Discovery', 'OWA Discoveries', $nb);
    }
 
    static function getDiscoveryList($action_name) {
-      $list = getAllDatasFromTable( self::getTable(), "`action_name` = '".strtolower($action_name)."'", false, '`app_name`, `action_ext`');
-      $actions = [];
-      foreach($list as $action) {
-         $actions[$action['action_ext']] = $action;
-      }
-      return $actions;
+       $condition=[
+        'action_name' => strtolower($action_name)
+       ];
+       $dbu = new DbUtils();
+       $list = $dbu->getAllDataFromTable( self::getTable(), $condition, false, '`app_name`, `action_ext`');
+       $actions = [];
+       foreach ($list as $action) {
+          $actions[$action['action_ext']] = $action;
+       }
+       return $actions;
    }
 
    static function discoverOWA($owaurl, $netzone) {
@@ -89,29 +94,59 @@ class PluginOfficeonlineDiscovery extends CommonDBTM {
 
          // here we may add or replace record in self table.
          $disco = new self;
-         if ($disco->getFromDBByQuery("WHERE `action_name` = '$action_name' AND `action_ext` = '$action_ext'")) {
+         //if ($disco->getFromDBByQuery("WHERE `action_name` = '$action_name' AND `action_ext` = '$action_ext'")) {
+         if ($disco->getFromDBByRequest([
+             'WHERE'  => [
+                'action_name'  => $action_name,
+                'action_ext'  => $action_ext
+             ],
+         ])) {
             // found a record, then update it
             $disco->update( [
                'id' => $disco->fields['id'],
-               'app_name' => $app_name,
+               'app_name'       => $app_name,
                'app_faviconurl' => $app_faviconurl,
-               'action_name' => $action_name,
-               'action_ext' => $action_ext,
-               'action_urlsrc' => $action_urlsrc
+               'action_name'    => $action_name,
+               'action_ext'     => $action_ext,
+               'action_urlsrc'  => $action_urlsrc
                ]);
          } else {
             // not record yet, then add it
             $disco->add( [
-               'app_name' => $app_name,
+               'app_name'       => $app_name,
                'app_faviconurl' => $app_faviconurl,
-               'action_name' => $action_name,
-               'action_ext' => $action_ext,
-               'action_urlsrc' => $action_urlsrc
+               'action_name'    => $action_name,
+               'action_ext'     => $action_ext,
+               'action_urlsrc'  => $action_urlsrc,
+               'is_active'      => 0
                ]);
          }
       }
 
       return true;
+   }
+
+
+   /*
+    * Get enabled extensions
+    */
+   function getEnableExtensions() {
+      $found = $this->find("`action_name` = 'view' AND `is_active` = 1");
+      if ($found) {
+         echo json_encode($found);
+      }
+      return false;
+   }
+
+
+   /*
+    * Update rows where action_ext = action_ext of current element.
+    */
+   function post_updateItem($history = 1) {
+      global $DB;
+      if ($this->fields['action_ext']) {
+         $res = $DB->query("UPDATE `glpi_plugin_officeonline_discoveries` SET `is_active` = ".$this->fields['is_active'] ." WHERE `action_ext` = '".$this->fields['action_ext'] ."'" );
+      }
    }
 
 }

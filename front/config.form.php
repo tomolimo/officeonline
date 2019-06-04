@@ -29,6 +29,17 @@ along with GLPI. If not, see <http://www.gnu.org/licenses/>.
 include ( "../../../inc/includes.php");
 
 $config = new PluginOfficeonlineConfig();
+$disco = new PluginOfficeonlineDiscovery();
+
+if (isset($_POST['ext'])) {
+   foreach ($_POST['ext'] as $k => $val) {
+      $values = ['id'         => $val['id'],
+                 'action_ext' => $k,
+                 'is_active'  => $val['active']];
+      $disco->update($values);
+   }
+}
+
 if (isset($_POST["update"])) {
    $config->check($_POST['id'], UPDATE);
 

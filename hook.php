@@ -26,37 +26,14 @@ along with GLPI. If not, see <http://www.gnu.org/licenses/>.
 --------------------------------------------------------------------------
  */
 
-
-if (!function_exists('arTableExists')) {
-   function arTableExists($table) {
-      global $DB;
-      if (method_exists( $DB, 'tableExists')) {
-         return $DB->tableExists($table);
-      } else {
-         return TableExists($table);
-      }
-   }
-}
-
-if (!function_exists('arFieldExists')) {
-   function arFieldExists($table, $field, $usecache = true) {
-      global $DB;
-      if (method_exists( $DB, 'fieldExists')) {
-         return $DB->fieldExists($table, $field, $usecache);
-      } else {
-         return FieldExists($table, $field, $usecache);
-      }
-   }
-}
-
 /**
  * Summary of plugin_officeonline_install
  * @return true or die!
  */
 function plugin_officeonline_install() {
     global $DB;
-
-   if (!arTableExists("glpi_plugin_officeonline_configs")) {
+    $migration = new Migration(100);
+   if (!$DB->tableExists("glpi_plugin_officeonline_configs")) {
       $query = "  CREATE TABLE `glpi_plugin_officeonline_configs` (
 	                    `id` INT(11) NOT NULL AUTO_INCREMENT,
 	                    `discovery_url` VARCHAR(512) NOT NULL DEFAULT 'https://my.owa.server/hosting/discovery',
@@ -76,7 +53,7 @@ function plugin_officeonline_install() {
 
    }
 
-   if (!arTableExists("glpi_plugin_officeonline_discoveries")) {
+   if (!$DB->tableExists("glpi_plugin_officeonline_discoveries")) {
       $query = "  CREATE TABLE `glpi_plugin_officeonline_discoveries` (
 	                    `id` INT(11) NOT NULL AUTO_INCREMENT,
                        `app_name` VARCHAR(10) NOT NULL,
@@ -84,6 +61,7 @@ function plugin_officeonline_install() {
                        `action_name` VARCHAR(30) NOT NULL,
 	                    `action_ext` VARCHAR(10) NOT NULL,
 	                    `action_urlsrc` VARCHAR(512) NOT NULL,
+                       `is_active` TINYINT(1) NOT NULL DEFAULT '0',
 	                    PRIMARY KEY (`id`),
                        UNIQUE INDEX `action` (`action_name`, `action_ext`)
                     )
@@ -95,7 +73,17 @@ function plugin_officeonline_install() {
       $DB->query($query) or die("error creating glpi_plugin_officeonline_discoveries" . $DB->error());
    }
 
-
+   if ($DB->TableExists("glpi_plugin_officeonline_discoveries")) {
+      if (!$DB->fieldExists("glpi_plugin_officeonline_discoveries", "is_active")) {
+         $migration->addField(
+            'glpi_plugin_officeonline_discoveries',
+            'is_active',
+            'bool',
+            ['value' => 0]
+            );
+      }
+      $migration->executeMigration();
+   }
 
    return true;
 }
