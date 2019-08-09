@@ -91,7 +91,7 @@ class PluginOfficeonlineDiscovery extends CommonDBTM {
             || $action_name == "" ) {
             continue;
          }
-
+         
          // here we may add or replace record in self table.
          $disco = new self;
          //if ($disco->getFromDBByQuery("WHERE `action_name` = '$action_name' AND `action_ext` = '$action_ext'")) {
@@ -103,7 +103,7 @@ class PluginOfficeonlineDiscovery extends CommonDBTM {
          ])) {
             // found a record, then update it
             $disco->update( [
-               'id' => $disco->fields['id'],
+               'id'             => $disco->fields['id'],
                'app_name'       => $app_name,
                'app_faviconurl' => $app_faviconurl,
                'action_name'    => $action_name,
@@ -131,7 +131,8 @@ class PluginOfficeonlineDiscovery extends CommonDBTM {
     * Get enabled extensions
     */
    function getEnableExtensions() {
-      $found = $this->find("`action_name` = 'view' AND `is_active` = 1");
+      $found = $this->find(['AND'=>['action_name' => 'view', 'is_active' => 1]]);
+      //$found = $this->find("`action_name` = 'view' AND `is_active` = 1");
       if ($found) {
          echo json_encode($found);
       }
@@ -142,11 +143,17 @@ class PluginOfficeonlineDiscovery extends CommonDBTM {
    /*
     * Update rows where action_ext = action_ext of current element.
     */
-   function post_updateItem($history = 1) {
-      global $DB;
-      if ($this->fields['action_ext']) {
-         $res = $DB->query("UPDATE `glpi_plugin_officeonline_discoveries` SET `is_active` = ".$this->fields['is_active'] ." WHERE `action_ext` = '".$this->fields['action_ext'] ."'" );
-      }
-   }
+   //function post_updateItem($history = 1) {
+   //   //global $DB;
+   //   //if ($this->fields['action_ext']) {
+   //   //   $this->update(
+   //   //            [
+   //   //            'is_active' => $this->fields['is_active'],                  
+   //   //            'action_ext'=> $this->fields['action_ext'],
+   //   //            'id'        => $this->fields['id']
+   //   //            ]);
+   //   //   //$res = $DB->querly("UPDATE `glpi_plugin_officeonline_discoveries` SET `is_active` = ".$this->fields['is_active'] ." WHERE `action_ext` = '".$this->fields['action_ext'] ."'" );
+   //   //}
+   //}
 
 }

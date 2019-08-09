@@ -30,7 +30,7 @@ along with GLPI. If not, see <http://www.gnu.org/licenses/>.
 // Original Author of file: Olivier Moron
 // Purpose of file: to setup office online plugin to GLPI
 // ----------------------------------------------------------------------
-define ("PLUGIN_OFFICEONLINE_VERSION", "1.2.0");
+define ("PLUGIN_OFFICEONLINE_VERSION", "1.3.1");
 /**
  * Summary of plugin_init_officeonline
  */
@@ -65,7 +65,7 @@ function plugin_version_officeonline() {
            'author'         => 'Olivier Moron',
            'license'        => 'GPLv2+',
            'homepage'       => 'https://github.com/tomolimo/officeonline',
-           'minGlpiVersion' => '9.3'];
+           'minGlpiVersion' => '9.4'];
 }
 
 
@@ -77,8 +77,8 @@ function plugin_officeonline_check_prerequisites() {
    global $DB, $LANG;
 
     // Strict version check (could be less strict, or could allow various version)
-   if (version_compare(GLPI_VERSION, '9.3', 'lt') || version_compare(GLPI_VERSION, '9.4', 'ge')) {
-      echo "This plugin requires GLPI >= 9.3 and < 9.4";
+   if (version_compare(GLPI_VERSION, '9.4', 'lt') || version_compare(GLPI_VERSION, '9.5', 'ge')) {
+      echo "This plugin requires GLPI >= 9.4 and < 9.5";
       return false;
    }
 

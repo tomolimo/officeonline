@@ -225,7 +225,7 @@ class PluginOfficeonlineConfig extends CommonDBTM {
    /*
     * Form to activate/deactivate doctype
     */
-   function showExtensionForm() {
+   static function showExtensionForm() {
       global $DB, $LANG, $CFG_GLPI;
 
       $extension = self::getInstance();
