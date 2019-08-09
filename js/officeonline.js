@@ -33,8 +33,7 @@ $(function () {
    var href = window.location.href;
    var indexOrigin = href.search('/front/document.php');
    var origin = href.substr(0, indexOrigin);
-   var translation;
-
+   var translation = "View and edit in your browser";
    var prefURL = '';
    var scripts = document.getElementsByTagName('script');
    for (i = 0; i < scripts.length; i++) {
@@ -44,7 +43,7 @@ $(function () {
       }
    }
 
-   function setOfficeOnlineURL() {
+   function setOfficeOnlineURL(translation) {
       $('a[href^="/front/document.send.php?docid="]').each(function () {
          var href = this.href;
          var title = this.title == '' ? this.text : this.title;
@@ -82,32 +81,45 @@ $(function () {
     * Get enabled extension in officeonline config.
     */
    // if (indexOrigin > -1) {
-       $.get(
-           prefURL+"/plugins/officeonline/ajax/translation.php",
-           {lang:"lang"},
-            function (response) {
-                translation = JSON.parse(response);
-            }
-       );
+       //$.get(
+       //    prefURL+"/plugins/officeonline/ajax/translation.php",
+       //    {lang:"lang"},
+       //     function (response) {
+       //         translation = JSON.parse(response);
+       //     }
+       //);
        $.ajax({
-            url: prefURL + "/plugins/officeonline/ajax/extensionList.php",
-            type: "GET",
-            data: { extensions: "extensions" },
-            success: function (resp) {
-               if (!resp) {
-                   return false;
-               }
-               ext = JSON.parse(resp);
-               Object.keys(ext).forEach(function (element) {
-                   extensions.push(ext[element]['action_ext']);
+           url: prefURL + "/plugins/officeonline/ajax/translation.php",
+           type: "GET",
+           data: { lang: "lang" },
+           success: function (response) {
+                translation = JSON.parse(response);
+           },
+           error: function (result, status, error) {
+           },
+           complete: function (result, error) {
+               $.ajax({
+                   url: prefURL + "/plugins/officeonline/ajax/extensionList.php",
+                   type: "GET",
+                   data: { extensions: "extensions" },
+                   success: function (resp) {
+                       if (!resp) {
+                           return false;
+                       }
+                       ext = JSON.parse(resp);
+                       Object.keys(ext).forEach(function (element) {
+                           extensions.push(ext[element]['action_ext']);
+                       });
+                       setOfficeOnlineURL(translation);
+                   },
+                   error: function (result, status, error) {
+                   },
+                   complete: function (result, status) {
+                   }
                });
-               setOfficeOnlineURL();
-            },
-            error: function (resultat, statut, erreur) {
-            },
-            complete: function (resultat, statut) {
-            }
-         });
+           }
+       });
+       
 
        $(document).ajaxComplete(function (event, jqXHR, ajaxOptions) {
          try {
