@@ -30,7 +30,7 @@ along with GLPI. If not, see <http://www.gnu.org/licenses/>.
 // Original Author of file: Olivier Moron
 // Purpose of file: to setup office online plugin to GLPI
 // ----------------------------------------------------------------------
-define ("PLUGIN_OFFICEONLINE_VERSION", "1.2.0");
+define ("PLUGIN_OFFICEONLINE_VERSION", "1.2.1");
 /**
  * Summary of plugin_init_officeonline
  */
