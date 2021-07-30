@@ -50,7 +50,8 @@ class PluginOfficeonlineDiscovery extends CommonDBTM {
         'action_name' => strtolower($action_name)
        ];
        $dbu = new DbUtils();
-       $list = $dbu->getAllDataFromTable( self::getTable(), $condition, false, '`app_name`, `action_ext`');
+       $condition['ORDER'] = ['app_name', 'action_ext'];
+       $list = $dbu->getAllDataFromTable( self::getTable(), $condition, false);
        $actions = [];
        foreach ($list as $action) {
           $actions[$action['action_ext']] = $action;
@@ -91,7 +92,7 @@ class PluginOfficeonlineDiscovery extends CommonDBTM {
             || $action_name == "" ) {
             continue;
          }
-         
+
          // here we may add or replace record in self table.
          $disco = new self;
          //if ($disco->getFromDBByQuery("WHERE `action_name` = '$action_name' AND `action_ext` = '$action_ext'")) {
@@ -148,7 +149,7 @@ class PluginOfficeonlineDiscovery extends CommonDBTM {
    //   //if ($this->fields['action_ext']) {
    //   //   $this->update(
    //   //            [
-   //   //            'is_active' => $this->fields['is_active'],                  
+   //   //            'is_active' => $this->fields['is_active'],
    //   //            'action_ext'=> $this->fields['action_ext'],
    //   //            'id'        => $this->fields['id']
    //   //            ]);

@@ -64,9 +64,8 @@ class PluginOfficeonlineConfig extends CommonDBTM {
     * @return mixed
     */
    static function getTypeName($nb = 0) {
-      global $LANG;
 
-      return $LANG['officeonline']['config']['setup'];
+      return __('Enabled document types', 'officeonline');
    }
 
    /**
@@ -75,9 +74,7 @@ class PluginOfficeonlineConfig extends CommonDBTM {
     * @return mixed
     */
    function getName($with_comment = 0) {
-      global $LANG;
-
-      return $LANG['officeonline']['title'][1];
+      return __('Office Online', 'officeonline');
    }
 
    /**
@@ -176,12 +173,12 @@ class PluginOfficeonlineConfig extends CommonDBTM {
       $config->showFormHeader(['colspan' => 4]);
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td >".$LANG['officeonline']['config']['discovery_url']."</td><td >";
+      echo "<td >".__('Office Web App (OWA) server URL', 'officeonline')."</td><td >";
       echo "<input size='50' type='text' name='discovery_url' value='".$config->fields['discovery_url']."'>";
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td >".$LANG['officeonline']['config']['net_zone']."</td><td >";
+      echo "<td >".__('Net zone', 'officeonline')."</td><td >";
       echo "<input type='text' name='net_zone' value='".$config->fields['net_zone']."'>";
       echo "</td></tr>\n";
 
@@ -204,10 +201,8 @@ class PluginOfficeonlineConfig extends CommonDBTM {
 
 
    function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
-      global $LANG;
-
       if ($item->getType()=='Config') {
-         return $LANG['officeonline']['title'][1];
+         return __('Office Online', 'officeonline');
       }
       return '';
    }
@@ -226,14 +221,14 @@ class PluginOfficeonlineConfig extends CommonDBTM {
     * Form to activate/deactivate doctype
     */
    static function showExtensionForm() {
-      global $DB, $LANG, $CFG_GLPI;
+      global $DB, $CFG_GLPI;
 
       $extension = self::getInstance();
       $datas = PluginOfficeonlineDiscovery::getDiscoveryList('view');
 
-      $extension->showFormHeader(['formtitle'=>$LANG['officeonline']['doctype']['setup'],'colspan' => 4]);
+      $extension->showFormHeader(['formtitle'=>__('Office Online setup', 'officeonline'),'colspan' => 4]);
       //echo "<tr><td>Extension</td><td>Application name</td><td><input type='checkbox' id=checkAll name='checkAll' /></td>";
-      echo "<tr><td><b>".$LANG['officeonline']['doctype']['doctype']."</b></td><td><b>".$LANG['officeonline']['doctype']['app_name']."</b></td><td><input type='checkbox' id='checkAll' name='checkAll' /></td>";
+      echo "<tr><td><b>".__('Document type', 'officeonline')."</b></td><td><b>".__('Application', 'officeonline')."</b></td><td><input type='checkbox' id='checkAll' name='checkAll' /></td>";
       $i=0;
       foreach ($datas as $data) {
          $color = ($i%2 == 0) ? 'rgb(247, 247, 247)' : '#FFFFFF';

@@ -61,8 +61,8 @@ if (isset($_REQUEST['docid'])) {
 function viewInBrowser($doc) {
    global $CFG_GLPI;
 
-   $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? "https://" : "http://";
-   $wopiUrl = $protocol.$_SERVER['SERVER_NAME' ].":".$_SERVER['SERVER_PORT' ].$CFG_GLPI["root_doc"]."/plugins/officeonline/front/wopi.front.php/files/";
+   //$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? "https://" : "http://";
+   $wopiUrl = $CFG_GLPI['url_base']."/plugins/officeonline/front/wopi.front.php/files/";
 
    $users_id = Session::getLoginUserID(true);
    $canUpdate = 0;
@@ -101,7 +101,7 @@ function viewInBrowser($doc) {
       echo $file_content;
    } else {
       $port = empty($_SERVER['SERVER_PORT'])?'':':'.$_SERVER['SERVER_PORT'];
-      header("Location: ".$protocol.$_SERVER['SERVER_NAME' ].$port.$CFG_GLPI["root_doc"].'/front/document.send.php?docid='.$doc->fields['id']);
+      header("Location: ".$CFG_GLPI['url_base'].'/front/document.send.php?docid='.$doc->fields['id']);
    }
 
 }

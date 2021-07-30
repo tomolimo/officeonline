@@ -44,7 +44,7 @@ class PluginOfficeonlineFile {
          // get the user name from DB
          $user = new User;
          $user->getFromDB($users_id);
-         $name = $user->getRawName();
+         $name = $user->getFriendlyName();
       }
       return $name;
    }
@@ -102,7 +102,7 @@ class PluginOfficeonlineFile {
      */
    static function checkFileInfo($docid, $access_token, $sc = '') {
       global $CFG_GLPI;
-      $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? "https://" : "http://";
+      //$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? "https://" : "http://";
 
       $doc = new Document;
       $doc->getFromDB($docid);
@@ -121,7 +121,7 @@ class PluginOfficeonlineFile {
       $users_id = self::getUserId($access_token);
       $canUpdate = self::canUpdate($access_token);
 
-      $closeUrl = $protocol.$_SERVER['SERVER_NAME' ].$CFG_GLPI["root_doc"]."/front/document.form.php?id=$docid";
+      $closeUrl = $CFG_GLPI['url_base']."/front/document.form.php?id=$docid";
       if ($sc != '') {
          $closeUrl = $sc;
       }
@@ -139,11 +139,11 @@ class PluginOfficeonlineFile {
                            "SupportsExtendedLockLength" => true,
                            "UserCanWrite" => $canUpdate,
                            "BreadcrumbBrandName" => "GLPI",
-                           "BreadcrumbBrandUrl" => $protocol.$_SERVER['SERVER_NAME' ].$CFG_GLPI["root_doc"],
+                           "BreadcrumbBrandUrl" => $CFG_GLPI['url_base'],
                            "BreadcrumbFolderName" => $doc->getTypeName(),
-                           "BreadcrumbFolderUrl" => $protocol.$_SERVER['SERVER_NAME' ].$CFG_GLPI["root_doc"]."/front/document.form.php?id=$docid",
+                           "BreadcrumbFolderUrl" => $CFG_GLPI['url_base']."/front/document.form.php?id=$docid",
                            "CloseUrl" => $closeUrl,
-                           "DownloadUrl" => $protocol.$_SERVER['SERVER_NAME' ].$CFG_GLPI["root_doc"]."/front/document.send.php?docid=$docid" //,
+                           "DownloadUrl" => $CFG_GLPI['url_base']."/front/document.send.php?docid=$docid" //,
                            //"ClientUrl" => 'ms-word:ofv|u|http://localhost/c:/inetpub/wwwroot/glpi091/files/DOCX/b2/87694daaecb0c36a391378b5812c1050d1e34c.DOCX'
                             ]);
    }
