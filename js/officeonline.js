@@ -50,8 +50,7 @@ $(function () {
          href = this.href.replace('/front/document.send.php?docid=', '/plugins/officeonline/front/document.view.php?docid=');
          var regex = /[^.]*$/i;
          var ext = title.match(regex);
-         ext = ext[0].replace(/[^a-za-z ]/gi, "");
-         ext = ext.toLowerCase(); 
+         ext = ext[0].replace(/[^a-za-z ]/g, "");
          //debugger;
          if ($.inArray(ext, extensions) !== -1) { //if doctype is in the array, display an icon to display the document in the browser.
             var alt = translation;
