@@ -29,21 +29,9 @@ $(function () {
 
    var tmr = 0;
    var tmrCount = 1;
-   var extensions = [];
-   var href = window.location.href;
-   var indexOrigin = href.search('/front/document.php');
-   var origin = href.substr(0, indexOrigin);
-   var translation = "View and edit in your browser";
-   var prefURL = '';
-   var scripts = document.getElementsByTagName('script');
-   for (i = 0; i < scripts.length; i++) {
-       var pos = scripts[i].src.search("/plugins/officeonline/js/officeonline.js");
-      if (pos >= 0) {
-          prefURL = scripts[i].src.substr(0, pos);
-      }
-   }
+   var extensions = GLPI_OFFICEONLINE_PLUGIN_DATA;
 
-   function setOfficeOnlineURL(translation) {
+   function setOfficeOnlineURL() {
       $('a[href^="/front/document.send.php?docid="]').each(function () {
          var href = this.href;
          var title = this.title == '' ? this.text : this.title;
@@ -53,9 +41,7 @@ $(function () {
          ext = ext[0].replace(/[^a-za-z ]/g, "");
          //debugger;
          if ($.inArray(ext, extensions) !== -1) { //if doctype is in the array, display an icon to display the document in the browser.
-            var alt = translation;
-            //var obj = $("<a title='" + alt + "' class='edit_document fa fa-pencil pointer' ></a>").attr('href', href);
-            var obj = $("<a title='" + alt + "' style='margin-left: 9px;' ><img class='middle' src='/plugins/officeonline/pics/view-edit.png' /></a>").attr('href', href);
+            var obj = $("<a title='" + __("View and edit in your browser", "officeonline") + "' style='margin-left: 9px;' ><img class='middle' src='" + CFG_GLPI.root_doc + "/plugins/officeonline/pics/view-edit.png' /></a>").attr('href', href);
             //debugger;
             if ($(this).parent().find(".ARbuttons").length == 0) {
                var html_code = "<span class='ARbuttons' style='opacity:0.3'>";
@@ -77,80 +63,41 @@ $(function () {
       }
    }
 
-   /*
-    * Get enabled extension in officeonline config.
-    */
-   // if (indexOrigin > -1) {
-       //$.get(
-       //    prefURL+"/plugins/officeonline/ajax/translation.php",
-       //    {lang:"lang"},
-       //     function (response) {
-       //         translation = JSON.parse(response);
-       //     }
-       //);
-       $.ajax({
-           url: prefURL + "/plugins/officeonline/ajax/translation.php",
-           type: "GET",
-           data: { lang: "lang" },
-           success: function (response) {
-                translation = JSON.parse(response);
-           },
-           error: function (result, status, error) {
-           },
-           complete: function (result, error) {
-               $.ajax({
-                   url: prefURL + "/plugins/officeonline/ajax/extensionList.php",
-                   type: "GET",
-                   data: { extensions: "extensions" },
-                   success: function (resp) {
-                       if (!resp) {
-                           return false;
-                       }
-                       ext = JSON.parse(resp);
-                       Object.keys(ext).forEach(function (element) {
-                           extensions.push(ext[element]['action_ext']);
-                       });
-                       setOfficeOnlineURL(translation);
-                   },
-                   error: function (result, status, error) {
-                   },
-                   complete: function (result, status) {
-                   }
-               });
-           }
-       });
-       
+   // 
+   setTimeout(setOfficeOnlineURL, 2000); // to be sure that translation will be loaded :(
 
-       $(document).ajaxComplete(function (event, jqXHR, ajaxOptions) {
-         try {
-            if (jqXHR.responseText.match(/\/front\/document\.send.php\?docid=\d+/i)) {
-                 //debugger;
-                 // if in the ajx response are present some links to download documents, then
-                 // will set them to point to office online URL
-                 tmrCount = 1;
-                 tmr = setInterval(setOfficeOnlineURL, 200);
-            }
-         } catch (e) {
+   // ajaxcomplet will be used when documents are listed in a tab for an item
+   $(document).ajaxComplete(function (event, jqXHR, ajaxOptions) {
+      try {
+         //debugger;
+         if (jqXHR.responseText.match(/\/front\/document\.send.php\?docid=\d+/i)) {
+               // if in the ajx response are present some links to download documents, then
+               // will set them to point to office online URL
+               tmrCount = 1;
+               tmr = setInterval(setOfficeOnlineURL, 200);
          }
-       });
-   // }
+      } catch (e) {
+      }
+   });
 
-       $(document).on("mouseenter", ".ARbuttons", function () {
-           $(this).css('opacity', '1');
-       });
-       $(document).on("mouseleave", ".ARbuttons", function () {
-           $(this).css('opacity', '0.3');
-       });
 
-       $(document).on("click", "#checkAll", function () {
-         if ($(this).is(":checked")) {
-            $(":checkbox").prop("checked", true);
-            $(".active").attr("value", 1);
-         } else {
-            $(":checkbox").prop("checked", false);
-            $(".active").attr("value", 0);
-         }
-       });
+   $(document).on("mouseenter", ".ARbuttons", function () {
+      $(this).css('opacity', '1');
+   });
+   $(document).on("mouseleave", ".ARbuttons", function () {
+      $(this).css('opacity', '0.3');
+   });
+
+   $(document).on("click", "#checkAll", function () {
+   if ($(this).is(":checked")) {
+      $(":checkbox").prop("checked", true);
+      $(".active").attr("value", 1);
+   } else {
+      $(":checkbox").prop("checked", false);
+      $(".active").attr("value", 0);
+   }
+   });
+
     /*
      * Update value of field 'is_active'
      */
@@ -162,4 +109,5 @@ $(function () {
           $(this).parent().find('.active').attr('value', '0');
       }
    });
+
 });
