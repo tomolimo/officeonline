@@ -183,14 +183,14 @@ class PluginOfficeonlineConfig extends CommonDBTM {
       echo "</td></tr>\n";
 
       echo "<tr class='tab_bg_1'>";
-      echo "<td >".__('Connection status')."</td><td >";
+      echo "<td >".__('Connection status', 'officeonline')."</td><td >";
 
       if ($config->fields['discovery_url'] != ''
          && $config->fields['net_zone'] != ''
          && PluginOfficeonlineDiscovery::discoverOWA($config->fields['discovery_url'], $config->fields['net_zone']) ) {
-         echo "<font color='green'>".__('Test successful, and discovery of OWA URLs complete');
+         echo "<font color='green'>".__('Test successful, and discovery of OWA URLs complete', 'officeonline');
       } else {
-         echo "<font color='red'>".__('Test failed, discovery of OWA URLs not done');
+         echo "<font color='red'>".__('Test failed, discovery of OWA URLs not done', 'officeonline');
       }
       echo "</font></span></td></tr>\n";
 

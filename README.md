@@ -16,9 +16,9 @@ GLPI plugin that provides an interface with an Office Online Server.
 Be aware that if you are using an external Office Online Server, then it will need an access to the GLPI plugin, and in particular to: `http(s)://GLPI-EXTERNAL-FQDN/plugins/officeonline/front/wopi.front.php` file.
 
 ### Tested with:
-1. GLPI: 9.1, 9.2, 9.3, 9.4, 9.5
-1. An internal Office Online Server: 16.0.7601.6800
-1. IE11, FireFox, Chrome, Safari 
+1. GLPI: 9.1, 9.2, 9.3, 9.4, 9.5, 10.0
+1. An on-premise Office Online Server: 16.0.7601.6800, 16.0.10392.20000
+1. IE11, FireFox, Chrome, Safari, Edge 
 
 ### Currently doesn't support, but there are plans to :smiley::
 1. Document conversion into Office formats

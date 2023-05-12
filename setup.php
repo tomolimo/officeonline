@@ -30,17 +30,14 @@ along with GLPI. If not, see <http://www.gnu.org/licenses/>.
 // Original Author of file: Olivier Moron
 // Purpose of file: to setup office online plugin to GLPI
 // ----------------------------------------------------------------------
-define ("PLUGIN_OFFICEONLINE_VERSION", "2.0.2");
+define ("PLUGIN_OFFICEONLINE_VERSION", "3.0.0");
 /**
  * Summary of plugin_init_officeonline
  */
 function plugin_init_officeonline() {
    global $PLUGIN_HOOKS, $CFG_GLPI;
 
-   $plugin = new Plugin();
-   if ($plugin->isInstalled('officeonline')
-        && $plugin->isActivated('officeonline')
-        && Session::getLoginUserID()) {
+   if (Session::getLoginUserID()) {
 
       if (Session::haveRightsOr("config", [READ, UPDATE])) {
          Plugin::registerClass('PluginOfficeonlineConfig', ['addtabon' => 'Config']);
@@ -48,6 +45,11 @@ function plugin_init_officeonline() {
       }
 
       $PLUGIN_HOOKS['add_javascript']['officeonline'] = "js/officeonline.js";
+
+      // this hook will not redefine menu, but will output the GLPI_OFFICEONLINE_PLUGIN_DATA js variable
+      // to pass officeonline data to the js
+      $PLUGIN_HOOKS['redefine_menus']['officeonline'] = 'plugin_officeonline_redefine_menus';
+
    }
 
    $PLUGIN_HOOKS['csrf_compliant']['officeonline'] = true;
@@ -65,7 +67,13 @@ function plugin_version_officeonline() {
            'author'         => 'Olivier Moron',
            'license'        => 'GPLv2+',
            'homepage'       => 'https://github.com/tomolimo/officeonline',
-           'minGlpiVersion' => '9.5'];
+           'requirements' => [
+               'glpi'         => [
+                  'min' => '10.0',
+                  'max' => '10.1'
+         ],
+            ]
+         ];
 }
 
 
@@ -77,8 +85,8 @@ function plugin_officeonline_check_prerequisites() {
    global $DB, $LANG;
 
     // Strict version check (could be less strict, or could allow various version)
-   if (version_compare(GLPI_VERSION, '9.5', 'lt') || version_compare(GLPI_VERSION, '9.6', 'ge')) {
-      echo "This plugin requires GLPI >= 9.5 and < 9.6";
+   if (version_compare(GLPI_VERSION, '10.0', 'lt') || version_compare(GLPI_VERSION, '10.1', 'ge')) {
+      echo "This plugin requires GLPI >= 10.0 and < 10.1";
       return false;
    }
 

@@ -1,0 +1,66 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Timezones plugin\n"
+"POT-Creation-Date: 2022-03-04 16:43+0100\n"
+"PO-Revision-Date: 2022-03-04 17:11+0100\n"
+"Last-Translator: tomolimo\n"
+"Language-Team: en_GB\n"
+"Language: cs_CZ\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __:1,2t;_e:1,2t;_x:1c,2,3t;_n:1,2,4t;__s:1,2t;"
+"_ex:1c,2,3t;_sx:1c,2,3t;_nx:1c,2,3,5t\n"
+"X-Poedit-SearchPath-0: js\n"
+"X-Poedit-SearchPath-1: hook.php\n"
+"X-Poedit-SearchPath-2: setup.php\n"
+"X-Poedit-SearchPath-3: front\n"
+"X-Poedit-SearchPath-4: inc\n"
+"X-Poedit-SearchPath-5: ajax\n"
+
+#: ajax/translation.php:6 js/officeonline.js:36
+msgid "View and edit in your browser"
+msgstr "Zobrazte a upravte ve svém prohlížeči"
+
+#: inc/config.class.php:68
+msgid "Enabled document types"
+msgstr "Enabled document types"
+
+#: inc/config.class.php:77 inc/config.class.php:205
+msgid "Office Online"
+msgstr "Office Online"
+
+#: inc/config.class.php:176
+msgid "Office Web App (OWA) server URL"
+msgstr "URL adresa serveru s Office Web App (OWA)"
+
+#: inc/config.class.php:181
+msgid "Net zone"
+msgstr "Síťová zóna"
+
+#: inc/config.class.php:186
+msgid "Connection status"
+msgstr "Connection status"
+
+#: inc/config.class.php:191
+msgid "Test successful, and discovery of OWA URLs complete"
+msgstr "Test successful, and discovery of OWA URLs complete"
+
+#: inc/config.class.php:193
+msgid "Test failed, discovery of OWA URLs not done"
+msgstr "Test failed, discovery of OWA URLs not done"
+
+#: inc/config.class.php:229
+msgid "Office Online setup"
+msgstr "Nastavení pro Office Online"
+
+#: inc/config.class.php:231
+msgid "Document type"
+msgstr "Document type"
+
+#: inc/config.class.php:231
+msgid "Application"
+msgstr "Application"

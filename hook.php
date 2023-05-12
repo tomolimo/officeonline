@@ -35,7 +35,7 @@ function plugin_officeonline_install() {
     $migration = new Migration(100);
    if (!$DB->tableExists("glpi_plugin_officeonline_configs")) {
       $query = "  CREATE TABLE `glpi_plugin_officeonline_configs` (
-	                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+	                    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	                    `discovery_url` VARCHAR(512) NOT NULL DEFAULT 'https://my.owa.server/hosting/discovery',
 	                    `net_zone` VARCHAR(50) NOT NULL DEFAULT 'internal-https',
 	                    PRIMARY KEY (`id`)
@@ -55,7 +55,7 @@ function plugin_officeonline_install() {
 
    if (!$DB->tableExists("glpi_plugin_officeonline_discoveries")) {
       $query = "  CREATE TABLE `glpi_plugin_officeonline_discoveries` (
-	                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+	                    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                        `app_name` VARCHAR(10) NOT NULL,
                        `app_faviconurl` VARCHAR(512) NOT NULL,
                        `action_name` VARCHAR(30) NOT NULL,
@@ -88,9 +88,33 @@ function plugin_officeonline_install() {
    return true;
 }
 
+
 function plugin_officeonline_uninstall() {
     global $DB;
 
     return true;
 }
 
+
+function plugin_officeonline_redefine_menus($menu) {
+
+   $disco = new PluginOfficeonlineDiscovery();
+   ob_start();
+   $disco->getEnableExtensions();
+   $ext_list = ob_get_clean();
+   $ext_list = json_decode($ext_list);
+
+   $plugin_data = [];
+   foreach ($ext_list as $k => $ext) {
+      $plugin_data[] = $ext->action_ext;
+   }
+
+   // inject them into javascript
+   $plugin_data = 'var GLPI_OFFICEONLINE_PLUGIN_DATA = '.json_encode($plugin_data).';';
+
+   echo Html::scriptBlock("
+         $plugin_data
+      ");
+
+   return $menu;
+}
