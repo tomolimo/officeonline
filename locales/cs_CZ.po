@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: officeonline\n"
 "POT-Creation-Date: 2022-03-04 16:41+0100\n"
-"PO-Revision-Date: 2023-08-16 08:31\n"
+"PO-Revision-Date: 2023-08-16 09:03\n"
 "Last-Translator: tomolimo\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -31,11 +31,11 @@ msgstr "Zobrazte a upravte ve svém prohlížeči"
 
 #: inc/config.class.php:68
 msgid "Enabled document types"
-msgstr ""
+msgstr "Enabled document types"
 
 #: inc/config.class.php:77 inc/config.class.php:205
 msgid "Office Online"
-msgstr ""
+msgstr "Office Online"
 
 #: inc/config.class.php:176
 msgid "Office Web App (OWA) server URL"
@@ -47,15 +47,15 @@ msgstr "Síťová zóna"
 
 #: inc/config.class.php:186
 msgid "Connection status"
-msgstr ""
+msgstr "Connection status"
 
 #: inc/config.class.php:191
 msgid "Test successful, and discovery of OWA URLs complete"
-msgstr ""
+msgstr "Test successful, and discovery of OWA URLs complete"
 
 #: inc/config.class.php:193
 msgid "Test failed, discovery of OWA URLs not done"
-msgstr ""
+msgstr "Test failed, discovery of OWA URLs not done"
 
 #: inc/config.class.php:229
 msgid "Office Online setup"
@@ -63,9 +63,9 @@ msgstr "Nastavení pro Office Online"
 
 #: inc/config.class.php:231
 msgid "Document type"
-msgstr ""
+msgstr "Document type"
 
 #: inc/config.class.php:231
 msgid "Application"
-msgstr ""
+msgstr "Application"
 
