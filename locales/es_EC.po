@@ -4,12 +4,12 @@ msgstr ""
 "POT-Creation-Date: 2022-03-04 16:41+0100\n"
 "PO-Revision-Date: 2023-08-17 06:24\n"
 "Last-Translator: tomolimo\n"
-"Language-Team: French\n"
-"Language: fr_FR\n"
+"Language-Team: Spanish, Ecuador\n"
+"Language: es_EC\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __:1,2t;_e:1,2t;_x:1c,2,3t;_n:1,2,4t;__s:1,2t;_ex:1c,2,3t;_sx:1c,2,3t;_nx:1c,2,3,5t\n"
@@ -21,17 +21,17 @@ msgstr ""
 "X-Poedit-SearchPath-5: ajax\n"
 "X-Crowdin-Project: officeonline\n"
 "X-Crowdin-Project-ID: 608343\n"
-"X-Crowdin-Language: fr\n"
+"X-Crowdin-Language: es-EC\n"
 "X-Crowdin-File: /[tomolimo.officeonline] 3.0.bugfixes/locales/en_GB.po\n"
 "X-Crowdin-File-ID: 43\n"
 
 #: ajax/translation.php:6 js/officeonline.js:36
 msgid "View and edit in your browser"
-msgstr "Visualiser et éditer dans votre navigateur"
+msgstr "Ver y editar en el navegador"
 
 #: inc/config.class.php:68
 msgid "Enabled document types"
-msgstr "Types de document activés"
+msgstr "Tipos de documentos habilitados"
 
 #: inc/config.class.php:77 inc/config.class.php:205
 msgid "Office Online"
@@ -39,33 +39,33 @@ msgstr "Office Online"
 
 #: inc/config.class.php:176
 msgid "Office Web App (OWA) server URL"
-msgstr "URL du serveur 'Office Web App' (OWA)"
+msgstr "URL del servidor de Office Web App (OWA)"
 
 #: inc/config.class.php:181
 msgid "Net zone"
-msgstr "Zone réseau"
+msgstr "Net zone"
 
 #: inc/config.class.php:186
 msgid "Connection status"
-msgstr "État de la connexion"
+msgstr "Estado de la conexión"
 
 #: inc/config.class.php:191
 msgid "Test successful, and discovery of OWA URLs complete"
-msgstr "Succès du test, découverte des URLs OWA faite"
+msgstr "Prueba exitosa y descubrimiento de URL de OWA completo"
 
 #: inc/config.class.php:193
 msgid "Test failed, discovery of OWA URLs not done"
-msgstr "Échec du test, découverte des URLs OWA non faite"
+msgstr "La prueba ha fallado, no se han descubierto las URL de OWA"
 
 #: inc/config.class.php:229
 msgid "Office Online setup"
-msgstr "Configuration d'Office Online"
+msgstr "Configuración de Office Online"
 
 #: inc/config.class.php:231
 msgid "Document type"
-msgstr "Types de document"
+msgstr "Tipo de documento"
 
 #: inc/config.class.php:231
 msgid "Application"
-msgstr "Application"
+msgstr "Aplicación"
 
