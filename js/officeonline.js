@@ -29,11 +29,14 @@ $(function () {
 
    var tmr = 0;
    var tmrCount = 1;
-   var extensions = GLPI_OFFICEONLINE_PLUGIN_DATA;
+   var extensions = typeof GLPI_OFFICEONLINE_PLUGIN_DATA === "undefined" ? [] : GLPI_OFFICEONLINE_PLUGIN_DATA;
 
    function setOfficeOnlineURL() {
       $('a[href^="/front/document.send.php?docid="]').each(function () {
-         if (this.text.match(new RegExp('(\\.' + extensions.join("\\b)|(\\.") + '\\b)', 'i'))) { //if doctype is in the array, display an icon to display the document in the browser.
+         let rex = new RegExp('(\\.' + extensions.join("\\b)|(\\.") + '\\b)', 'i');
+         if ((this.text && this.text.match(rex))
+            || (this.title && this.title.match(rex))
+            || (this.alt && this.alt.match(rex))) { //if doctype is in the array, display an icon to display the document in the browser.
             var href = this.href.replace('/front/document.send.php?docid=', '/plugins/officeonline/front/document.view.php?docid=');
             var obj = $("<a title='" + __("View and edit in your browser", "officeonline") + "' style='margin-left: 9px;' ><img class='middle' src='" + CFG_GLPI.root_doc + "/plugins/officeonline/pics/view-edit.png' /></a>").attr('href', href);
             if ($(this).parent().find(".ARbuttons").length == 0) {
