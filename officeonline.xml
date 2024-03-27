@@ -6,12 +6,12 @@
    <logo>https://raw.githubusercontent.com/tomolimo/officeonline/master/officeonline.png</logo>
    <description>
       <short>
-		   <fr>Ce plugin fournit la possibilité d'utiliser un server Office Online avec les documents de GLPI.</fr>
+         <fr>Ce plugin fournit la possibilité d'utiliser un server Office Online avec les documents de GLPI.</fr>
          <en>This plugin provides possibility to use an Office Online server with GLPI documents.</en>
          <cs>Tento zásuvný modul umožňuje použít Office Online server s GLPI dokumenty.</cs>
       </short>
       <long>
-		   <fr>Ce plugin implémente un hôte WOPI permettant l'intégration d'un serveur Office Online. Cela permet de visionner les documents GLPI dans le navigateur, au lieu de les télécharger, et de les éditer en ligne (dans le navigateur). Si le format du document n'est pas supporté par le server Office Online, alors le plugin retourne au comportement GLPI standard (c'est à dire : téléchargement du document). Ce plugin permet aussi de faire de la co-édition d'un document (édition simultanée d'un document par plusieurs utilisateurs).</fr>
+         <fr>Ce plugin implémente un hôte WOPI permettant l'intégration d'un serveur Office Online. Cela permet de visionner les documents GLPI dans le navigateur, au lieu de les télécharger, et de les éditer en ligne (dans le navigateur). Si le format du document n'est pas supporté par le server Office Online, alors le plugin retourne au comportement GLPI standard (c'est à dire : téléchargement du document). Ce plugin permet aussi de faire de la co-édition d'un document (édition simultanée d'un document par plusieurs utilisateurs).</fr>
          <en>This plugin implements a WOPI host which permits integration of an Office Online server. This enables GLPI document viewing in the browser, instead of downloading them, and it enables online editing in the browser. If doucment format is not supported by the Office Online server, then plugin falls-back on the GLPI standard behavior (.i.e: document download). this plugin allows the document co-authoring (simultaneous editing of a document by several users).</en>
          <cs>Tento zásuvný modul implementuje WOPI hostitele, což dovoluje integraci s Office Online serverem. To umožňuje prohlížet GLPI dokumenty v prohlížeči, namísto jejich stahovnání, a také jejich upravování online zde. Pokud není formát dokumentu podporován Office Online serverem, pak je náhradně použíto výchozí chování GLPI (tj. stažení dokumentu). Tento zásuvný modul umožňuje úpravování dokumentu ve více lidech naráz.</cs>
       </long>
@@ -25,7 +25,7 @@
    </authors>
    <versions>
      <version>
-       <num>3.0.3</num>
+       <num>3.1.0</num>
        <compatibility>10.0</compatibility>
      </version>
      <version>
@@ -66,15 +66,15 @@
       <fr>
          <tag>Document</tag>
          <tag>Edition</tag>
-			<tag>En ligne</tag>
+         <tag>En ligne</tag>
          <tag>Visualisation</tag>
          <tag>Office</tag>
       </fr>
       <en>
          <tag>Document</tag>
          <tag>Edition</tag>
-			<tag>Online</tag>
-			<tag>Viewing</tag>
+         <tag>Online</tag>
+         <tag>Viewing</tag>
          <tag>Office</tag>
       </en>
    </tags>

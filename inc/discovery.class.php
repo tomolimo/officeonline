@@ -2,9 +2,9 @@
 /*
  * -------------------------------------------------------------------------
 OfficeOnline plugin
-Copyright (C) 2018 by Raynet SAS a company of A.Raymond Network.
+Copyright (C) 2018-2024 by Raynet SAS a company of A.Raymond Network.
 
-http://www.araymond.com
+https://www.araymond.com
 -------------------------------------------------------------------------
 
 LICENSE
@@ -131,11 +131,11 @@ class PluginOfficeonlineDiscovery extends CommonDBTM {
    /*
     * Get enabled extensions
     */
-   function getEnableExtensions() {
-      $found = $this->find(['AND'=>['action_name' => 'view', 'is_active' => 1]]);
-      //$found = $this->find("`action_name` = 'view' AND `is_active` = 1");
+   static function getEnableExtensions() {
+      $disco = new PluginOfficeonlineDiscovery();
+      $found = $disco->find(['AND'=>['action_name' => 'view', 'is_active' => 1]]);
       if ($found) {
-         echo json_encode($found);
+         return $found;
       }
       return false;
    }

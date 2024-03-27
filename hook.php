@@ -2,9 +2,9 @@
 /*
  * -------------------------------------------------------------------------
 OfficeOnline plugin
-Copyright (C) 2018 by Raynet SAS a company of A.Raymond Network.
+Copyright (C) 2018-2024 by Raynet SAS a company of A.Raymond Network.
 
-http://www.araymond.com
+https://www.araymond.com
 -------------------------------------------------------------------------
 
 LICENSE
@@ -98,23 +98,13 @@ function plugin_officeonline_uninstall() {
 
 function plugin_officeonline_redefine_menus($menu) {
 
-   $disco = new PluginOfficeonlineDiscovery();
-   ob_start();
-   $disco->getEnableExtensions();
-   $ext_list = ob_get_clean();
-   $ext_list = json_decode($ext_list);
-
    $plugin_data = [];
-   foreach ($ext_list as $k => $ext) {
-      $plugin_data[] = $ext->action_ext;
+   foreach (PluginOfficeonlineDiscovery::getEnableExtensions() as $ext) {
+      $plugin_data[] = $ext['action_ext'];
    }
 
    // inject them into javascript
-   $plugin_data = 'var GLPI_OFFICEONLINE_PLUGIN_DATA = '.json_encode($plugin_data).';';
-
-   echo Html::scriptBlock("
-         $plugin_data
-      ");
+   echo Html::scriptBlock('var GLPI_OFFICEONLINE_PLUGIN_DATA = ' . json_encode($plugin_data) . ';');
 
    return $menu;
 }
