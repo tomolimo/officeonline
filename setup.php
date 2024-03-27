@@ -2,9 +2,9 @@
 /*
  * -------------------------------------------------------------------------
 OfficeOnline plugin
-Copyright (C) 2018 by Raynet SAS a company of A.Raymond Network.
+Copyright (C) 2018-2024 by Raynet SAS a company of A.Raymond Network.
 
-http://www.araymond.com
+https://www.araymond.com
 -------------------------------------------------------------------------
 
 LICENSE
@@ -30,7 +30,11 @@ along with GLPI. If not, see <http://www.gnu.org/licenses/>.
 // Original Author of file: Olivier Moron
 // Purpose of file: to setup office online plugin to GLPI
 // ----------------------------------------------------------------------
-define ("PLUGIN_OFFICEONLINE_VERSION", "3.0.3");
+define ("PLUGIN_OFFICEONLINE_VERSION", "3.1.0");
+// Minimal GLPI version, inclusive
+define('PLUGIN_OFFICEONLINE_MIN_GLPI', '10.0');
+// Maximum GLPI version, exclusive
+define('PLUGIN_OFFICEONLINE_MAX_GLPI', '10.1');
 /**
  * Summary of plugin_init_officeonline
  */
@@ -69,8 +73,8 @@ function plugin_version_officeonline() {
            'homepage'       => 'https://github.com/tomolimo/officeonline',
            'requirements' => [
                'glpi'         => [
-                  'min' => '10.0',
-                  'max' => '10.1'
+                  'min' => PLUGIN_OFFICEONLINE_MIN_GLPI,
+                  'max' => PLUGIN_OFFICEONLINE_MAX_GLPI
          ],
             ]
          ];
@@ -85,8 +89,8 @@ function plugin_officeonline_check_prerequisites() {
    global $DB, $LANG;
 
     // Strict version check (could be less strict, or could allow various version)
-   if (version_compare(GLPI_VERSION, '10.0', 'lt') || version_compare(GLPI_VERSION, '10.1', 'ge')) {
-      echo "This plugin requires GLPI >= 10.0 and < 10.1";
+   if (version_compare(GLPI_VERSION, PLUGIN_OFFICEONLINE_MIN_GLPI, 'lt') || version_compare(GLPI_VERSION, PLUGIN_OFFICEONLINE_MAX_GLPI, 'ge')) {
+      echo "This plugin requires GLPI >= ".PLUGIN_OFFICEONLINE_MIN_GLPI." and < ".PLUGIN_OFFICEONLINE_MAX_GLPI;
       return false;
    }
 

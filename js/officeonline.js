@@ -1,9 +1,9 @@
 ﻿/*
  * -------------------------------------------------------------------------
 OfficeOnline plugin
-Copyright (C) 2018 by Raynet SAS a company of A.Raymond Network.
+Copyright (C) 2018-2024 by Raynet SAS a company of A.Raymond Network.
 
-http://www.araymond.com
+https://www.araymond.com
 -------------------------------------------------------------------------
 
 LICENSE
@@ -38,17 +38,16 @@ $(function () {
             || (this.title && this.title.match(rex))
             || (this.alt && this.alt.match(rex))) { //if doctype is in the array, display an icon to display the document in the browser.
             var href = this.href.replace('/front/document.send.php?docid=', '/plugins/officeonline/front/document.view.php?docid=');
-            var obj = $("<a title='" + __("View and edit in your browser", "officeonline") + "' style='margin-left: 9px;' ><img class='middle' src='" + CFG_GLPI.root_doc + "/plugins/officeonline/pics/view-edit.png' /></a>").attr('href', href);
-            if ($(this).parent().find(".ARbuttons").length == 0) {
-               var html_code = "<span class='ARbuttons' style='opacity:0.3'>";
-               if ($(this).parent().find(".buttons").length == 0) {
-                  $(this).parent().append(html_code);
-               } else {
-                  $(this).parent().find(".buttons").before(html_code);
+            var obj = $("<a class='btn btn-sm btn-ghost-secondary ARbuttons' data-bs-toggle='tooltip' data-bs-placement='top' title='" + __("View and edit in your browser", "officeonline") + "'><i class='ti ti-file-pencil'></i></a>").attr('href', href);
+            var these = [
+               $(this).parent('td'),
+               $(this).parent().parent().find('div.list-group-item-actions')
+            ];
+            these.forEach(e => {
+               if (e.length == 1 && e.find('.ARbuttons').length == 0) {
+                  e.append(obj);
                }
-               $(this).parent().find(".ARbuttons").append(obj);
-               $(this).parents('td').css('white-space', 'nowrap');
-            }
+            });
          }
       });
       if (tmr) {
@@ -67,42 +66,12 @@ $(function () {
       try {
          //debugger;
          if (jqXHR.responseText.match(/\/front\/document\.send.php\?docid=\d+/i)) {
-               // if in the ajx response are present some links to download documents, then
+               // if in the ajax response are present some links to download documents, then
                // will set them to point to office online URL
                tmrCount = 1;
                tmr = setInterval(setOfficeOnlineURL, 200);
          }
       } catch (e) {
-      }
-   });
-
-
-   $(document).on("mouseenter", ".ARbuttons", function () {
-      $(this).css('opacity', '1');
-   });
-   $(document).on("mouseleave", ".ARbuttons", function () {
-      $(this).css('opacity', '0.3');
-   });
-
-   $(document).on("click", "#checkAll", function () {
-   if ($(this).is(":checked")) {
-      $(":checkbox").prop("checked", true);
-      $(".active").attr("value", 1);
-   } else {
-      $(":checkbox").prop("checked", false);
-      $(".active").attr("value", 0);
-   }
-   });
-
-    /*
-     * Update value of field 'is_active'
-     */
-   $(document).on("click", "input[type='checkbox']", function () {
-       var name = $(this).parent().find('#id');
-      if ($(this).parent('td').find('input[type=hidden]').attr('value') == 0) {
-          $(this).parent().find('.active').attr('value', '1');
-      } else {
-          $(this).parent().find('.active').attr('value', '0');
       }
    });
 

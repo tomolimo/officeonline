@@ -2,9 +2,9 @@
 /*
  * -------------------------------------------------------------------------
 OfficeOnline plugin
-Copyright (C) 2018 by Raynet SAS a company of A.Raymond Network.
+Copyright (C) 2018-2024 by Raynet SAS a company of A.Raymond Network.
 
-http://www.araymond.com
+https://www.araymond.com
 -------------------------------------------------------------------------
 
 LICENSE
